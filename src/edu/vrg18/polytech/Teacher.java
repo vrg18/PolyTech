@@ -16,4 +16,6 @@ public interface Teacher {
     String getCourseName();
 
     String getResultsFile();
+
+    String getTeacherName();
 }

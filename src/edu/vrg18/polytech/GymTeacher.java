@@ -2,7 +2,11 @@ package edu.vrg18.polytech;
 
 public class GymTeacher implements Teacher {
 
-    private double moodFactor;  // "настроение" преподавателя
+    private static final String COURSE_NAME = "Физкультура";                // Предмет
+    private static final String RESULT_FILE = "Gym";                        // Файл для результатов
+    private static final String TEACHER_NAME = "Сидоров Сидор Сидорович";   // Преподаватель математики
+    private static final int IQ_NEEDED = 45;                                // Для физкультуры тербуется такое значение IQ
+    private double moodFactor;                                              // "настроение" преподавателя
 
     GymTeacher() {
         moodFactor = Math.random();  // генерируем "настроение" преподавателя
@@ -10,7 +14,7 @@ public class GymTeacher implements Teacher {
 
     @Override
     public int getIqNeeded() {
-        return 45; // Для физкультуры тербуется такое значение IQ
+        return IQ_NEEDED;
     }
 
     @Override
@@ -20,11 +24,16 @@ public class GymTeacher implements Teacher {
 
     @Override
     public String getCourseName() {
-        return "Физкультура";
+        return COURSE_NAME;
     }
 
     @Override
     public String getResultsFile() {
-        return "Gym";
+        return RESULT_FILE;
+    }
+
+    @Override
+    public String getTeacherName() {
+        return TEACHER_NAME;
     }
 }
