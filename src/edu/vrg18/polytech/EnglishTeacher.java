@@ -22,4 +22,9 @@ public class EnglishTeacher implements Teacher {
     public String getCourseName() {
         return "Английский";
     }
+
+    @Override
+    public String getResultsFile() {
+        return "English";
+    }
 }

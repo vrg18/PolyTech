@@ -10,10 +10,14 @@ class Exam {
         this.teacher = teacher;
     }
 
-    void start() {
+    StringBuilder start() {
+        StringBuilder results = new StringBuilder();
         for (Student student : studentGroup) {
             boolean result = teacher.testStudent(student);
-            System.out.println(student.getFullName() + " (IQ=" + student.iq + "): " + (result ? "сдал" : "не сдал"));
+            results.append(student.getFullName()).append(" (IQ=").append(student.iq).append("): ").append(result ? "сдал" : "не сдал").append("\n");
         }
+        return results;
+
+
     }
 }

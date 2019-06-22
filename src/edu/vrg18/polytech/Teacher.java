@@ -14,4 +14,6 @@ public interface Teacher {
     Double getMoodFactor();
 
     String getCourseName();
+
+    String getResultsFile();
 }

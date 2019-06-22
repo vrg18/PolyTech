@@ -1,16 +1,16 @@
 package edu.vrg18.polytech;
 
-public class MathTeacher implements Teacher {
+public class GymTeacher implements Teacher {
 
     private double moodFactor;  // "настроение" преподавателя
 
-    MathTeacher() {
+    GymTeacher() {
         moodFactor = Math.random();  // генерируем "настроение" преподавателя
     }
 
     @Override
     public int getIqNeeded() {
-        return 120; // Для математики тербуется такое значение IQ
+        return 45; // Для физкультуры тербуется такое значение IQ
     }
 
     @Override
@@ -20,11 +20,11 @@ public class MathTeacher implements Teacher {
 
     @Override
     public String getCourseName() {
-        return "Математика";
+        return "Физкультура";
     }
 
     @Override
     public String getResultsFile() {
-        return "Mathematics";
+        return "Gym";
     }
 }

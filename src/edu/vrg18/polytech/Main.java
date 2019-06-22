@@ -1,6 +1,10 @@
 package edu.vrg18.polytech;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Main {
 
@@ -9,6 +13,7 @@ public class Main {
         ArrayList<Teacher> teacherGroup = new ArrayList<>();
         teacherGroup.add(new MathTeacher());
         teacherGroup.add(new EnglishTeacher());
+        teacherGroup.add(new GymTeacher());
 
         String[] fIOs = {
                 "Новиков Адриан Георгиевич",
@@ -29,10 +34,23 @@ public class Main {
             studentGroup[i] = new Student(fIO[0], fIO[1], fIO[2]);
         }
 
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+        String endingFileName = "_" + formatForDateNow.format(dateNow) + ".txt";
+
         for (Teacher teacher : teacherGroup) {
-            System.out.println(teacher.getCourseName() + " (Настроение преподавателя - " + teacher.getMoodFactor() + "):");
+
+            StringBuilder results = new StringBuilder(teacher.getCourseName() + " (Настроение преподавателя - " + teacher.getMoodFactor() + "): \n\n");
             Exam exam = new Exam(studentGroup, teacher);
-            exam.start();
+            results.append(exam.start());
+
+            try (FileOutputStream fos = new FileOutputStream(teacher.getResultsFile() + endingFileName)) {
+                byte[] buffer = results.toString().getBytes();
+                fos.write(buffer, 0, buffer.length);
+            }
+            catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 }
