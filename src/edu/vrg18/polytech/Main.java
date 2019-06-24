@@ -1,5 +1,8 @@
 package edu.vrg18.polytech;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+import org.json.JSONObject;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -9,31 +12,20 @@ import java.util.Date;
 
 public class Main {
 
-    public static void main(String[] args) {
+    private static final int NUMBER_OF_STUDENTS = 10;                               // Генерируем десяток студентов
+    private static final String RANDUS_ORG_FIO_API = "https://randus.org/api.php";  // API для генерации ФИО
+    private static final String FIO_API_LAST_NAME = "lname";
+    private static final String FIO_API_FIRST_NAME = "fname";
+    private static final String FIO_API_MIDDLE_NAME = "patronymic";
+
+    public static void main(String[] args) throws IOException {
 
         ArrayList<Teacher> teacherGroup = new ArrayList<>();
         teacherGroup.add(new MathTeacher());
         teacherGroup.add(new EnglishTeacher());
         teacherGroup.add(new GymTeacher());
 
-        String[] fIOs = {
-                "Новиков Адриан Георгиевич",
-                "Устинов Нинель Яковлевич",
-                "Дьячков Юрий Васильевич",
-                "Мельников Ким Семенович",
-                "Журавлёв Василий Лукьевич",
-                "Рыбаков Макар Константинович",
-                "Елисеев Владлен Геннадиевич",
-                "Белоусов Агафон Ильяович",
-                "Панов Герасим Альвианович",
-                "Ефимов Кирилл Геннадьевич"
-        };
-
-        Student[] studentGroup = new Student[fIOs.length];
-        for (int i = 0; i < fIOs.length; i++) {
-            String[] fIO = fIOs[i].split(" +");
-            studentGroup[i] = new Student(fIO[0], fIO[1], fIO[2]);
-        }
+        ArrayList<Student> studentGroup = getStudentGroup(NUMBER_OF_STUDENTS);
 
         DecimalFormat formatForMoodFactor = new DecimalFormat("###.##");
         Date dateNow = new Date();
@@ -54,7 +46,7 @@ public class Main {
                     .append(" (настроение - ")
                     .append(formatForMoodFactor.format(teacher.getMoodFactor()))
                     .append("), ")
-                    .append(formatForHeadLine.format(dateNow))
+                    .append(StringUtils.capitalize(formatForHeadLine.format(dateNow)))
                     .append("\n\n")
                     .append(exam.start());
 
@@ -66,5 +58,18 @@ public class Main {
                 System.out.println(ex.getMessage());
             }
         }
+    }
+
+    private static ArrayList<Student> getStudentGroup(int number) throws IOException {
+
+        ArrayList<Student> studentGroup = new ArrayList<>();
+        for (int i = 0; i < number; i++) {
+            JSONObject json = JsonReader.readJsonFromUrl(RANDUS_ORG_FIO_API);
+            studentGroup.add(new Student(String.join(" ",
+                    json.get(FIO_API_LAST_NAME).toString(),
+                    json.get(FIO_API_FIRST_NAME).toString(),
+                    json.get(FIO_API_MIDDLE_NAME).toString())));
+        }
+        return studentGroup;
     }
 }

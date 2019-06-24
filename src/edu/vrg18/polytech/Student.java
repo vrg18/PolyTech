@@ -7,10 +7,11 @@ class Student {
     private String middleName;
     int iq;
 
-    Student(String lastName, String firstName, String middleName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
+    Student(String fullName) {
+        String[] fIO = fullName.split(" +");
+        this.lastName = fIO[0];
+        this.firstName = fIO[1];
+        this.middleName = fIO[2];
         iq = (int) (Math.random() * 200);
     }
 

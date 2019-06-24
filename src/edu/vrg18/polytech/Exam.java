@@ -1,27 +1,29 @@
 package edu.vrg18.polytech;
 
+import java.util.ArrayList;
+
 class Exam {
 
-    private Student[] studentGroup;
+    private ArrayList<Student> studentGroup;
     private Teacher teacher;
 
-    Exam(Student[] studentGroup, Teacher teacher) {
+    Exam(ArrayList<Student> studentGroup, Teacher teacher) {
         this.studentGroup = studentGroup;
         this.teacher = teacher;
     }
 
     StringBuilder start() {
+
         StringBuilder results = new StringBuilder();
-        for (Student student : studentGroup) {
-            boolean result = teacher.testStudent(student);
-            results
-                    .append(student.getFullName())
-                    .append(" (IQ=")
-                    .append(student.iq)
-                    .append("): ")
-                    .append(result ? "сдал" : "не сдал")
-                    .append("\n");
-        }
+
+        studentGroup.forEach(p -> results
+                        .append(p.getFullName())
+                        .append(" (IQ=")
+                        .append(p.iq)
+                        .append("): ")
+                        .append(teacher.testStudent(p) ? "сдал" : "не сдал")
+                        .append("\n"));
+
         return results;
     }
 }
