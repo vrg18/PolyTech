@@ -15,7 +15,7 @@ public interface Teacher {
 
     String getCourseName();
 
-    String getResultsFile();
+    StringBuilder getResultsFile();
 
     String getTeacherName();
 }

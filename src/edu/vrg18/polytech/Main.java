@@ -2,6 +2,7 @@ package edu.vrg18.polytech;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,17 +35,30 @@ public class Main {
             studentGroup[i] = new Student(fIO[0], fIO[1], fIO[2]);
         }
 
+        DecimalFormat formatForMoodFactor = new DecimalFormat("###.##");
         Date dateNow = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
-        String endingFileName = "_" + formatForDateNow.format(dateNow) + ".txt";
+        SimpleDateFormat formatForHeadLine = new SimpleDateFormat("EEEE в HH:mm");
+        SimpleDateFormat formatForFileName = new SimpleDateFormat("dd.MM.yyyy");
+        StringBuilder endingFileName = new StringBuilder();
+        endingFileName
+                .append("_")
+                .append(formatForFileName.format(dateNow))
+                .append(".txt");
 
         for (Teacher teacher : teacherGroup) {
 
-            StringBuilder results = new StringBuilder(teacher.getCourseName() + " (Настроение преподавателя - " + teacher.getMoodFactor() + "): \n\n");
             Exam exam = new Exam(studentGroup, teacher);
-            results.append(exam.start());
+            StringBuilder results = new StringBuilder(teacher.getCourseName())
+                    .append(" / ")
+                    .append(teacher.getTeacherName())
+                    .append(" (настроение - ")
+                    .append(formatForMoodFactor.format(teacher.getMoodFactor()))
+                    .append("), ")
+                    .append(formatForHeadLine.format(dateNow))
+                    .append("\n\n")
+                    .append(exam.start());
 
-            try (FileOutputStream fos = new FileOutputStream(teacher.getResultsFile() + endingFileName)) {
+            try (FileOutputStream fos = new FileOutputStream(teacher.getResultsFile().append(endingFileName).toString())) {
                 byte[] buffer = results.toString().getBytes();
                 fos.write(buffer, 0, buffer.length);
             }

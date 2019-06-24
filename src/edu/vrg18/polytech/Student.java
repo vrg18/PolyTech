@@ -15,6 +15,6 @@ class Student {
     }
 
     String getFullName() {
-        return lastName + " " + firstName + " " + middleName;
+        return String.join(" ", lastName, firstName, middleName);
     }
 }

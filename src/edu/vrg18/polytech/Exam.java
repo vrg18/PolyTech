@@ -5,8 +5,8 @@ class Exam {
     private Student[] studentGroup;
     private Teacher teacher;
 
-    Exam(Student[] studentList, Teacher teacher) {
-        this.studentGroup = studentList;
+    Exam(Student[] studentGroup, Teacher teacher) {
+        this.studentGroup = studentGroup;
         this.teacher = teacher;
     }
 
@@ -14,10 +14,14 @@ class Exam {
         StringBuilder results = new StringBuilder();
         for (Student student : studentGroup) {
             boolean result = teacher.testStudent(student);
-            results.append(student.getFullName()).append(" (IQ=").append(student.iq).append("): ").append(result ? "сдал" : "не сдал").append("\n");
+            results
+                    .append(student.getFullName())
+                    .append(" (IQ=")
+                    .append(student.iq)
+                    .append("): ")
+                    .append(result ? "сдал" : "не сдал")
+                    .append("\n");
         }
         return results;
-
-
     }
 }

@@ -28,8 +28,8 @@ public class EnglishTeacher implements Teacher {
     }
 
     @Override
-    public String getResultsFile() {
-        return RESULT_FILE;
+    public StringBuilder getResultsFile() {
+        return new StringBuilder(RESULT_FILE);
     }
 
     @Override
